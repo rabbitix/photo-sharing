@@ -1,0 +1,164 @@
+[project]
+name = 'foto-process'
+description = 'foto Process'
+authors = [
+
+    { name = 'Ali Fazeli', email = 'fazelidev@gmail.com' },
+]
+readme = 'README.md'
+classifiers = [
+    'Programming Language :: Python :: 3.11',
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: MIT License',
+    'Operating System :: Unix',
+    'Operating System :: POSIX :: Linux',
+    'Environment :: Console',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+]
+requires-python = '>=3.11'
+dependencies = []
+dynamic = ['version']
+[tool.setuptools.dynamic]
+version = { file = "VERSION" }
+
+[project.urls]
+Homepage = 'https://github.com'
+
+
+
+[tool.pytest.ini_options]
+testpaths = 'tests'
+markers = ["normalize_text", "strip_text"]
+filterwarnings = [
+    'error',
+    'ignore:This is a placeholder until pydantic-settings.*:UserWarning',
+    'ignore::UserWarning',
+    'ignore::DeprecationWarning'
+]
+
+[tool.black]
+color = true
+line-length = 120
+target-version = ['py311']
+skip-string-normalization = true
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+[tool.ruff]
+fix = false
+select = [
+    "B", # flake8-bugbear
+    "C", # flake8-comprehensions
+    "C4", # comprehensions
+    "E", # pycodestyle errors
+    "F", # pyflakes
+    "I", # isort
+    "INT", # flake8-gettext
+    "ISC", # implicit string concatenation
+    "PGH", # pygrep-hooks
+    "PIE", # misc lints
+    "PLC", "PLE", "PLR", "PLW", # pylint
+    "PYI", # flake8-pyi
+    "Q", # flake8-quotes
+    "RUF", # Ruff-specific rules
+    "T10", # flake8-debugger
+    "TCH", # type-checking imports
+    "TID", # tidy imports
+    "W", # pycodestyle warnings
+    "YTT", # flake8-2020
+]
+ignore = [
+    "C901", # too complex
+    "RUF001", "RUF003", # String contains ambiguous
+    "PLR2004", # Magic value used in comparison
+    "Q000", # ignore single quotes
+    "TCH002",
+    "B008",
+    "PLR0913", # too many argument for function "swagger fastapi",
+    "RUF012", # Mutable class attributes should be annotated with `typing.ClassVar` in runtime confige ALLOW_ORIGINS = ["*"]
+    "E501",
+    "F811"
+]
+src = ["src", "tests", "features"]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.per-file-ignores]
+# ignore F811 Redefinition of function in steps implementations
+
+
+
+[tool.ruff.mccabe]
+max-complexity = 10
+
+[tool.ruff.pylint]
+max-args = 5
+max-branches = 12
+max-returns = 6
+max-statements = 50
+
+[tool.autoflake]
+check = false
+in-place = true
+recursive = true
+remove-all-unused-imports = true
+ignore-init-module-imports = true
+
+[tool.ruff.isort]
+combine-as-imports = true
+known-first-party = ["src"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder", ]
+
+[tool.isort]
+combine_as_imports = true
+ensure_newline_before_comments = true
+filter_files = true
+force_grid_wrap = 0
+include_trailing_comma = true
+line_length = 120
+multi_line_output = 3
+profile = "black"
+py_version = 311
+use_parentheses = true
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_any_generics = false
+disallow_incomplete_defs = true
+disallow_subclassing_any = true
+disallow_untyped_calls = false
+disallow_untyped_decorators = true
+disallow_untyped_defs = true
+follow_imports = 'silent'
+no_implicit_reexport = true
+pretty = true
+python_version = "3.11"
+show_error_codes = true
+show_error_context = true
+strict_optional = true
+warn_no_return = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+warn_unused_ignores = true
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = []
+ignore_missing_imports = true
+
+
+[tool.bandit]
+exclude_dirs = ["tests",]
+skips = ["B101", "B403", "B301"]

@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  foto_process:
+    image: docker.io/library/foto:${DOCKER_IMAGE_VERSION}
+    container_name: foto_process
+    env_file:
+      - '.env'
+    command: python -m manage
+    networks:
+      - nginx_net
+    ports:
+      - "8086:8086"
+
+networks:
+  nginx_net:
+    external: true
